@@ -50,7 +50,6 @@ def writer_excel(output, info_list):
     worksheet.write(0, 3, "Profession", cell_format)
     row = 1
     for i in info_list:
-        print(i)
         worksheet.write(row, 0, i["name"])
         worksheet.write(row, 1, i["surname"])
         if i["age"] > str(35):
