@@ -5,11 +5,13 @@ def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--filename", required=True, help="filename")
     parser.add_argument("-o", "--output", required=True, help="output elsx file")
+    parser.add_argument("-s", "--sheet", help="sheet")
 
     args = parser.parse_args()
     fname = args.filename
     output = args.output
-    return fname, output
+    sheet = args.sheet
+    return fname, output, sheet
 
 
 
@@ -36,7 +38,7 @@ def get_info_list(cnt):
     return ml
 
 
-def writer_excel(output, info_list):
+def writer_excel(output, info_list, sheet):
     workbook = xlsxwriter.Workbook(output)
     worksheet = workbook.add_worksheet()
     cell_format = workbook.add_format()
@@ -58,15 +60,26 @@ def writer_excel(output, info_list):
             worksheet.write(row, 2, i["age"])
         worksheet.write(row, 3, i["profession"])
         row += 1
+    if sheet:
+        row2 = 0
+        worksheet2 = workbook.add_worksheet(sheet)
+        for i in info_list:
+            if i["profession"] == sheet:
+                worksheet2.write(row2, 0, i["name"])
+                worksheet2.write(row2, 1, i["surname"])
+                worksheet2.write(row2, 2, i["age"])
+                worksheet2.write(row2, 3, i["profession"])
+                row2 += 1
     workbook.close()
 
 
 
 def main():
-    fname, output = get_arguments()
+    fname, output, sheet = get_arguments()
     cnt = get_content(fname)
     info_name = get_info_list(cnt)
-    writer_excel(output, info_name)
+    writer_excel(output, info_name, sheet)
+
 
 
 
