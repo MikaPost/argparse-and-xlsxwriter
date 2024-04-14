@@ -1,3 +1,8 @@
+"""
+This file is for our new theme: gets the date creates an Excel file writes it to Excel this is the date
+Create by: Miqayel Postoyan
+Date: 15 April
+"""
 import argparse
 import xlsxwriter
 
